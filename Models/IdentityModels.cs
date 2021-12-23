@@ -25,6 +25,10 @@ namespace DevelTest.Models
         {
         }
 
+        public virtual DbSet<Poll> Polls { get; set; }
+        public virtual DbSet<PollField> PollFields { get; set; }
+        public virtual DbSet<PollFieldType> PollTypes { get; set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

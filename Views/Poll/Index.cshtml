@@ -1,25 +1,28 @@
-﻿@{
-    ViewBag.Title = "Home Page";
-}
+﻿@model DevelTest.Models.PollViewModel
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+@{
+    ViewBag.Title = "Nueva Encuesta";
+}
+<h1>
+    @ViewBag.Title
+</h1>
 
 <div class="row">
     <div class="col-md-12">
-        @using (Html.BeginForm("Index", "Form", FormMethod.Post, new { id = "pollCreateForm", @class = "form" }))
+        @using (Html.BeginForm("Index", "Poll", FormMethod.Post, new { id = "pollCreateForm", @class = "form" }))
         {
+            @Html.AntiForgeryToken()
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Email address</label>
+                @Html.LabelFor(x => x.Name, new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
                 <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
             <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
+                @Html.LabelFor(x => x.Description, new { @class = "form-label" })
                 <input type="password" class="form-control" id="exampleInputPassword1">
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
             <div class="mb-3 form-check">
                 <input type="checkbox" class="form-check-input" id="exampleCheck1">
