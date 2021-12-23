@@ -1,0 +1,7 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    <li class="nav-item">
+        @Html.ActionLink("Form", "Index", "Form", null, new { @class = "nav-link" })
+    </li>
+}

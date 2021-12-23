@@ -5,7 +5,8 @@ using System.Web;
 
 namespace DevelTest.Models
 {
-    public class MenuViewModel
+    public class Poll
     {
+
     }
 }
