@@ -25,6 +25,8 @@ namespace DevelTest.Models
         {
         }
 
+        public virtual DbSet<Menu> Menu { get; set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

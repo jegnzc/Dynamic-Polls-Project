@@ -176,7 +176,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\DAO\MenuModel.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\DAO\Menu.cs" />
     <Compile Include="Models\DTO\AccountViewModels.cs" />
     <Compile Include="Models\DTO\IdentityModels.cs" />
     <Compile Include="Models\DTO\ManageViewModels.cs" />

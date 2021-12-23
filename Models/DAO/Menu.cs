@@ -5,7 +5,7 @@ using System.Web;
 
 namespace DevelTest.Models
 {
-    public class MenuModel
+    public class Menu
     {
         public int Id { get; set; }
         public string Name { get; set; }
