@@ -1,0 +1,56 @@
+﻿@model DevelTest.Models.PollViewModel
+
+@{
+    ViewBag.Title = "Resultados";
+}
+
+<h1>
+    @ViewBag.Title
+</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        @if (Model != null)
+        {
+            <h3>@Model.Name</h3>
+            <hr />
+            <h3>@Model.Description</h3>
+            if (Model.PollFields != null)
+            {
+                int fieldQty = 0;
+                int answerQty = Model.PollFields[0].PollAnswers.Count;
+                <table class="table">
+                    <thead>
+                        <tr>
+                            @for (fieldQty = 0; fieldQty < Model.PollFields.Count; fieldQty++)
+                            {
+                                <th scope="col">@Model.PollFields[fieldQty].DisplayName</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < answerQty; i++)
+                        {
+                            <tr>
+                                @for (int x = 0; x < fieldQty; x++)
+                                {
+                                    <td>
+                                        @Model.PollFields[x].PollAnswers[i].Answer
+                                    </td>
+                                }
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+
+
+            }
+        }
+        else
+        {
+            <h2>No se ha creado ninguna encuesta.</h2>
+        }
+
+    </div>
+</div>

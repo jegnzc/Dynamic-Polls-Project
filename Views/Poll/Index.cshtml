@@ -1,34 +1,89 @@
-﻿@model DevelTest.Models.PollViewModel
+﻿@model IEnumerable<DevelTest.Models.PollViewModel>
 
 @{
-    ViewBag.Title = "Nueva Encuesta";
+    ViewBag.Title = "Encuestas";
 }
+
 <h1>
     @ViewBag.Title
 </h1>
 
 <div class="row">
     <div class="col-md-12">
-        @using (Html.BeginForm("Index", "Poll", FormMethod.Post, new { id = "pollCreateForm", @class = "form" }))
+        @if (Model != null)
         {
-            @Html.AntiForgeryToken()
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                @Html.LabelFor(x => x.Name, new { @class = "form-label" })
-                @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-            </div>
-            <div class="mb-3">
-                @Html.LabelFor(x => x.Description, new { @class = "form-label" })
-                <input type="password" class="form-control" id="exampleInputPassword1">
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-            <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">Check me out</label>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            int count = 0;
+            foreach (var poll in Model)
+            {
+                count++;
+                <h3>Encuesta @count</h3>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h5>Nombre</h5>
+                        <div class="form-control">@poll.Name</div>
+                    </div>
+                    <div class="col-sm-3">
+                        <h5>Descripción</h5>
+                        <div class="form-control">@poll.Description</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <h5>Url</h5>
+                        <div class="form-control">@poll.Url</div>
+                    </div>
+                    <div class="col-sm-6 mt-2">
+                        @Html.ActionLink("Editar", "Edit", "Poll", new { id = poll.Id }, new { @class = "btn btn-primary", id = poll.Id })
+                        @Html.ActionLink("Eliminar", "Delete", "Poll", new { id = poll.Id }, new { @class = "btn btn-danger", id = poll.Id })
+                        @Html.ActionLink("Ver Resultados", "Results", "Poll", new { id = poll.Id }, new { @class = "btn btn-success", id = poll.Id })
+                    </div>
+                </div>
+                if (poll.PollFields != null)
+                {
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Título</th>
+                                <th scope="col">Tipo de Campo</th>
+                                <th scope="col">Requerido</th>
+                            </tr>
+                        </thead>
+                        @foreach (var field in poll.PollFields)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @field.Name
+                                    </td>
+                                    <td>
+                                        @field.DisplayName
+                                    </td>
+                                    <td>
+                                        @field.PollFieldTypeDesc
+                                    </td>
+                                    <td>
+                                        @if (@field.Required)
+                                        {
+                                            <div>Requerido</div>
+                                        }
+                                        else
+                                        {
+                                            <div>No Requerido</div>
+                                        }
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        }
+                    </table>
+
+
+                }
+            }
         }
+        else
+        {
+            <h2>No se ha creado ninguna encuesta.</h2>
+        }
+
     </div>
 </div>

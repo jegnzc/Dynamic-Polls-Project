@@ -1,0 +1,78 @@
+﻿@model DevelTest.Models.PollViewModel
+
+@{
+    ViewBag.Title = "Responder Encuesta";
+}
+@Html.HiddenFor(x => x.PollFields)
+<h1>
+    @ViewBag.Title
+</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        @using (Html.BeginForm("Answer", "Poll", FormMethod.Post, new { id = "pollAnswerForm", @class = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-sm-3">
+                    <h5>Nombre</h5>
+                    <div class="form-control">@Model.Name</div>
+                </div>
+                <div class="col-sm-3">
+                    <h5>Descripción</h5>
+                    <div class="form-control">@Model.Description</div>
+                </div>
+                <div class="col-sm-6">
+                    <h5>Url</h5>
+                    <div class="form-control">@Model.Url</div>
+                </div>
+            </div>
+            <div class="row">
+                @for (int i = 0; i < Model.PollFields.Count; i++)
+                {
+                    @Html.HiddenFor(x => x.PollFields[i].Id)
+                    if (Model.PollFields[i].PollFieldTypeId == 1 && Model.PollFields[i].Required)
+                    {
+                        @Html.DisplayFor(x => x.PollFields[i].DisplayName)
+                        @Html.TextBoxFor(x => x.PollFields[i].Text, new { @class = "form-control ", required = "required" })
+                        @Html.ValidationMessageFor(model => model.PollFields[i].DisplayName, "", new { @class = "text-danger" })
+
+                    }
+                    else if (Model.PollFields[i].PollFieldTypeId == 2 && Model.PollFields[i].Required)
+                    {
+                        @Html.DisplayFor(x => x.PollFields[i].DisplayName)
+                        @Html.TextBoxFor(x => x.PollFields[i].Numeric, new { type = "number", @class = "form-control ", required = "required" })
+                        @Html.ValidationMessageFor(model => model.PollFields[i].DisplayName, "", new { @class = "text-danger" })
+                    }
+                    else if (Model.PollFields[i].PollFieldTypeId == 3 && Model.PollFields[i].Required)
+                    {
+                        @Html.DisplayFor(x => x.PollFields[i].DisplayName, new { @class = "form-label" })
+                        @Html.EditorFor(x => x.PollFields[i].Date, new { required = "required" })
+                        @Html.ValidationMessageFor(model => model.PollFields[i].DisplayName, "", new { @class = "text-danger" })
+                    }
+                    else if (Model.PollFields[i].PollFieldTypeId == 1)
+                    {
+                        @Html.DisplayFor(x => x.PollFields[i].DisplayName)
+                        @Html.TextBoxFor(x => x.PollFields[i].Text, new { @class = "form-control "})
+                        @Html.ValidationMessageFor(model => model.PollFields[i].DisplayName, "", new { @class = "text-danger" })
+                    }
+                    else if (Model.PollFields[i].PollFieldTypeId == 2)
+                    {
+                        @Html.DisplayFor(x => x.PollFields[i].DisplayName, new { @class = "form-label" })
+                        @Html.TextBoxFor(x => x.PollFields[i].Numeric, new { type = "number", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.PollFields[i].DisplayName, "", new { @class = "text-danger" })
+                    }
+                    else if (Model.PollFields[i].PollFieldTypeId == 3)
+                    {
+                        @Html.DisplayFor(x => x.PollFields[i].DisplayName, new { @class = "form-label" })
+                        @Html.EditorFor(x => x.PollFields[i].Date, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.PollFields[i].DisplayName, "", new { @class = "text-danger" })
+                    }
+
+                }
+            </div>
+            <button type="submit" class="btn btn-primary">Responder</button>
+        }
+
+    </div>
+</div>
