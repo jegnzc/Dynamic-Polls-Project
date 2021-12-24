@@ -243,7 +243,7 @@ namespace DevelTest.Controllers
                     context.Polls.Add(realModel);
                     context.SaveChanges();
                 }
-                return View();
+                return RedirectToAction(nameof(Index));
             }
             return View(model);
         }
